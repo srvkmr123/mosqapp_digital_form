@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Header from "./components/Header/Header";
+import Form from "./components/Form/Form";
+import CustomForm from "./components/Form/CustomForm";
+import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function App() {
+  const navigate = useNavigate()
+  useEffect(()=>{
+  navigate('/mosque/65dc9e818c40d70018da5b1d/member/register')
+  },[])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      {/* <Form/> */}
+      {/* <CustomForm/> */}
+     =
+        <Routes>
+          <Route path="/mosque/:mosqueId/member/register" element={<CustomForm/>} />
+        </Routes>
     </div>
   );
 }

@@ -1,0 +1,87 @@
+.plan-card {
+    min-width: 250px;
+    flex-grow: 1;
+    /* margin: 20px auto; */
+    background-color: white;
+    border-radius: 12px;
+    border: 0.8px solid rgba(239, 240, 246, 1);
+    box-shadow: 0 16px 24px rgba(98, 106, 128, 0.16);
+    padding: 20px;
+    transition: border-color 0.3s;
+    cursor: pointer;
+  }
+  
+  .plan-card.selected {
+    border-color: #ff4081;
+  }
+  
+  .plan-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    
+  }
+  .current-price{
+    font-size: 28px;
+  }
+  .plan-header input {
+    margin-right: 8px;
+  }
+  
+  .plan-header .premium {
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  .plan-price {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 20px 0;
+  }
+  
+  .plan-price .current-price {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .plan-price .original-price {
+    text-decoration: line-through;
+    color: #999;
+  }
+  
+  .select-button {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    background: linear-gradient(90deg, #ff4081, #ff79b0);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .select-button:hover {
+    background: linear-gradient(90deg, #ff79b0, #ff4081);
+  }
+  
+  .plan-details {
+    margin-top: 20px;
+  }
+  
+  .plan-details p {
+    margin: 0 0 10px;
+    font-weight: bold;
+  }
+  
+  .plan-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .plan-details li {
+    margin: 5px 0;
+  }
+  
