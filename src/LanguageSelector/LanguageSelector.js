@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import i18next from '../../services/i18next'
+import i18next from '../services/i18next'
 
 const LanguageSelector = ({}) => {
   const [currentLanguage, setCurrentLanguage] = useState('nl');
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const languages = [
-    { code: 'en', name: 'English', flag: 'https://flagcdn.com/us.svg' },
+    { code: 'en', name: 'English', flag: 'https://flagcdn.com/gb.svg' },
     { code: 'nl', name: 'Dutch', flag: 'https://flagcdn.com/nl.svg' }
   ];
 
@@ -19,12 +19,9 @@ const LanguageSelector = ({}) => {
   const changeLanguage = (code) => {
     setCurrentLanguage(code);
     i18next.changeLanguage(code)
-    localStorage.setItem('language',code)
     setDropdownOpen(false);
   };
-useEffect(()=>{
-    setCurrentLanguage(localStorage.getItem('language'));
-},[])
+
   return (
     <div className="language-select-container">
       <div className="language-select-label" onClick={toggleDropdown}>
@@ -48,8 +45,7 @@ useEffect(()=>{
       <style jsx>{`
         .language-select-container {
           position: relative;
-          display: inline-block;
-          margin-left: 20px;
+          margin-right:70px;
           border: none;
           
         }

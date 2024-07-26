@@ -12,7 +12,7 @@ const PlanCard = ({ plan, selectedPlan, setSelectedPlan }) => {
     <div className={`plan-card ${selectedPlan?._id===plan?._id ? 'selected' : ''}`} onClick={handleSelect}>
       <div className="plan-header">
         <input type="radio" checked={selectedPlan?._id=== plan?._id} readOnly />
-        <span>{plan?.plan_name}</span>
+        <span style={{fontWeight:700}}>{plan?.plan_name}</span>
       </div>
       <div className="plan-price">
         <span className="current-price">€{plan?.amount}</span>

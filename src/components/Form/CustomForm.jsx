@@ -308,7 +308,7 @@ function CustomForm() {
                     disabled={!selectedPlan}
                     style={{ background: selectedPlan ? "#D0004B" : "#a0aec0" }}
                   >
-                    Submit
+                    {t('Proceed to Auto Debit')}
                   </button>
                 </div>
               </Form>

@@ -30,11 +30,18 @@ color: var(--black-clr);
     left: 0;
     width: 100%;
     z-index:99;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 5px ;
+    padding-bottom: 5px;
+
 }
 .header-logo{
-    margin-left: 50px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+     margin-left: 50px;
+    /* margin-top: 5px;
+    margin-bottom: 5px;  */
+    /* background-color: red; */
 }
 .form{
     max-width: 800px;
@@ -126,24 +133,25 @@ color: var(--black-clr);
   .plans{
     margin-top: 40px;
     margin-bottom: 40px;
-    display: flex;
+    /* display: flex;
     justify-content: flex-start;
-    flex-wrap: wrap;
+    flex-wrap: wrap; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
   }
   .btn-container{
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
   }
   .submit-btn{
     background-color: '#D0004B';
     color: white;
-    font-weight: 800px;
+    font-weight: 700px;
     font-size: 18px;
     border-radius: 50px;
     border: none;
-    height: 60px;
-    width: 150px;
+    padding: 20px 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -202,11 +210,37 @@ color: var(--black-clr);
     justify-content: center;
   }
   @media only screen and (max-width: 777px) {
+    
+  .header-logo{
+    margin-left: 20px;
+  } 
+  .form-group>div{
+    all: unset;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+    .form{
+      margin: 20px auto;
+      margin-top: 100px;
+      margin-bottom: 100px;
+    }
     .form-group>div, .input-container{
       flex-grow: 1;
     }
     .form-group{
       gap: 20px;
+    }
+    .plans{
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media only screen and (max-width: 550px) {
+    .form-content{
+      padding: 20px 20px;
+  }
+    .plans{
+      grid-template-columns: 1fr;
     }
   }
   .css-1u9des2-indicatorSeparator{
