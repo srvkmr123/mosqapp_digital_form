@@ -8,5 +8,21 @@
     "Enter valid Phone number":"Enter valid Phone number",
     "Payment Details":"Payment Details",
     "Payment Mode":"Payment Mode",
-    "Automatic":"Automatic"
+    "Automatic":"Automatic",
+    "Submit details registered for Auto Debit":"Submit details registered for Auto Debit",
+    "No active plans":"No active plans",
+    "Proceed to Auto Debit":"Proceed to Auto Debit",
+    "Congratulations":"Congratulations",
+    "We will review all the information and if all is okay, our team will message you within 24 - 48 hours":"We will review all the information and if all is okay, our team will message you within 24 - 48 hours",
+    "Download PDF":"Download PDF",
+    "Name is required":"Name is required",
+    "Invalid email address":"Invalid email address",
+    "Email is required":"Email is required",
+    "Enter valid phone number":"Enter valid phone number",
+    "Select Plan":"Select Plan",
+    "Plan Details":"Plan Details",
+    "Billing Frequency":"Billing Frequency",
+    "Payment Date":"Payment Date",
+    "st of every month":"st of every month",
+    "Selected Plan":"Selected Plan"
 }

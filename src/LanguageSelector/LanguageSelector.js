@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import i18next from '../services/i18next'
 
-const LanguageSelector = ({}) => {
+const LanguageSelector = ({setLanguage}) => {
   const [currentLanguage, setCurrentLanguage] = useState('nl');
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -18,6 +18,7 @@ const LanguageSelector = ({}) => {
 
   const changeLanguage = (code) => {
     setCurrentLanguage(code);
+    setLanguage(code)
     i18next.changeLanguage(code)
     setDropdownOpen(false);
   };

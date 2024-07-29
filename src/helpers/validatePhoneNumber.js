@@ -1,16 +1,14 @@
-import {parsePhoneNumberFromString} from 'libphonenumber-js';
+import { isValidNumber, parsePhoneNumber } from 'libphonenumber-js';
 
 const validatePhoneNumber = (phoneNumber, countryCode) => {
-  try {
-    console.log('validate--->',phoneNumber, countryCode);
-    // if (phoneNumber === '') return false;
-    // const number = parsePhoneNumberFromString(phoneNumber, countryCode);
-    // console.log(number, number.isValid());
-    // return number.isValid();
-    return phoneNumber.length===9
-  } catch (e) {
-    return false;
-  }
+  phoneNumber = "+31"+phoneNumber;
+  // phoneNumber = "+3189"
+  // countryCode = "NL"
+  console.log(phoneNumber, countryCode);
+  const number = parsePhoneNumber(phoneNumber, countryCode);
+  console.log(number.isValid());
+  return number.isValid();
 };
 
 export default validatePhoneNumber;
+// console.log(validatePhoneNumber('+14155552671', 'US')); // true or false

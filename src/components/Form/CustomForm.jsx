@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Banner from "../Banner/Banner";
-import LanguageSelect from "../LanguageSelect/LanguageSelect";
 import PlanCard from "../PlanCard/PlanCard";
 import axios from "axios";
 import { baseUrl } from "../../app.config";
@@ -18,36 +17,25 @@ import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import validatePhoneNumber from "../../helpers/validatePhoneNumber";
 
+
 // Define your validation schema
 const validationSchema = Yup.object({
-  name: Yup.string().required("Name is required"),
+  name: Yup.string().required('Name is required'),
   email: Yup.string()
-    .email("Invalid email address")
-    .required("Email is required"),
-  language: Yup.object().nullable().required("Language is required"),
+    .matches(
+      /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+      'Invalid email address',
+    )
+    .required('Email is required'),
 });
 
-const countryOptions = [
-  {
-    code: "gb",
-    name: "English",
-    flag: "https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/flags/4x3/gb.svg",
-  },
-  {
-    code: "nl",
-    name: "Dutch",
-    flag: "https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/flags/4x3/nl.svg",
-  },
-  // Add more countries as needed
-];
 
 const initialValues = {
   name: "",
-  email: "",
-  language: countryOptions[1],
+  email: ""
 };
 
-function CustomForm() {
+function CustomForm({language}) {
   // const mosqueId = "65dc9e818c40d70018da5b1d";
   const {mosqueId }= useParams();
   const [mosque, setMosque] = useState(null);
@@ -56,7 +44,7 @@ function CustomForm() {
   const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState(null);
   const [countryCode, setCountryCode] = useState({ value: '+31', label: '+31 (Netherlands)', code:'NL' });
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const {t} = useTranslation();
 
   console.log(countryCode, phone);
@@ -83,60 +71,22 @@ function CustomForm() {
 
     getMosqueDetails();
   }, []);
-  const printDocument = async () => {
-    const form = document.querySelector(".form");
-    console.log(form);
-    if (!form) return;
-    form.scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-      inline: "nearest",
-    });
-    setTimeout(() => {
-      html2canvas(form, {
-        scrollY: -window.scrollY,
-        width: form.scrollWidth,
-        height: form.scrollHeight,
-      }).then(async (canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF();
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        const aspectRatio = canvas.width / canvas.height;
-        const pdfImgHeight = pdfHeight;
-        const pdfImgWidth = pdfImgHeight * aspectRatio;
-        const offsetX = (pdfWidth - pdfImgWidth) / 2;
-        pdf.addImage(imgData, "JPEG", offsetX, 0, pdfImgWidth, pdfImgHeight);
-        // pdf.save("download.pdf");
-        const pdfBytes = pdf.output("arraybuffer");
-        // const pdfBuffer = Buffer.from(pdfBytes);
-        const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
-        const formData = new FormData();
-        formData.append("pdf", pdfBlob, `${uuidv4()}.pdf`);
-        const baseUrl =
-          process.env.REACT_APP_STAGE === "development"
-            ? "apidev.mosqapp.com"
-            : "api.mosqapp.com";
-        fetch(`https://${baseUrl}/file/upload`, {
-          method: "POST",
-          body: formData,
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Failed to upload PDF");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log("PDF uploaded successfully:", data.data?.link);
-          })
-          .catch((error) => {
-            console.error("Error uploading PDF:", error);
-          });
-      });
-    }, 1000);
-  };
+  
   console.log(countryCode);
+
+  const  captureForm= async ()=> {
+    const form = document.querySelector('.form');
+    if(!form) return;
+    html2canvas(form ,{
+      scrollY: -window.scrollY,
+      width: form.scrollWidth,
+      height: form.scrollHeight,
+    }).then(canvas => {
+      const formImage = canvas.toDataURL('image/png');
+      localStorage.setItem('formImage', formImage);
+    });
+  }
+
   const handleSubmit = async (values) => {
     try {
       if (!validatePhoneNumber(phone,countryCode.code)) {
@@ -150,8 +100,8 @@ function CustomForm() {
         password: uuidv4(),
         phoneNumber: phone,
         countryCode: countryCode.value,
-        language: values.language.code,
-        // isMobileOnboarded:false
+        language,
+        isDigitalFormOnboarded:true,
       };
       console.log(userInput);
       const signUpRes = await axios.post(
@@ -190,6 +140,8 @@ function CustomForm() {
         config
       );
       console.log("payment-->", res.data);
+      await captureForm();
+      setPage(1)
     } catch (error) {
       console.log(error);
       alert(error.response.data.error);
@@ -298,7 +250,7 @@ function CustomForm() {
                       />
                     ))
                   ) : (
-                    <label className="label">No active plans..</label>
+                    <label className="label">{t('No active plans')}..</label>
                   )}
                 </div>
                 <div className="btn-container">

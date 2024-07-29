@@ -9,7 +9,7 @@ function Banner({mosque}) {
         
         <div style={{ width:'50%',marginLeft:'40px'}}>
          <p className='banner-title' >{t('Submit details registered for Auto Debit')}</p> 
-        <label style={{fontWeight:700, color:'#D0004B', fontSize:'25px'}}>{mosque?.name}</label>
+        <label style={{fontWeight:700, color:'#D0004B', fontSize:'25px'}}>{mosque?.name || 'NA'}</label>
         <p className='sub-heading' style={{fontWeight:500}}>{mosque?.city}, {mosque?.country}</p>
         </div>
         <img className='banner-strip' src={strip} alt='strip'/>

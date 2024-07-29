@@ -242,6 +242,18 @@ color: var(--black-clr);
     .plans{
       grid-template-columns: 1fr;
     }
+    .banner-title{
+      font-size: 20px;
+      font-weight: 700;
+      color: '#1a1a1a';
+      margin-top: 10px;
+      margin-bottom: 30px;
+    }
+    .banner .sub-heading{
+      margin: 0;
+      margin-top: 10px;
+      font-size: 14px;
+    }
   }
   .css-1u9des2-indicatorSeparator{
     width: 0px !important;
