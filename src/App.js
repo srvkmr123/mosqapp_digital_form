@@ -1,7 +1,8 @@
 import "./App.css";
 import Header from "./components/Header/Header";
 import CustomForm from "./components/Form/CustomForm";
-import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
+import SuccessPage from "./SuccessPage";
+import { BrowserRouter as Router, Route, Routes, useNavigate, useLocation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Header setLanguage={setLanguage} />
         <Routes>
           <Route path="/mosque/:mosqueId/member/register" element={<CustomForm language={language}/>} />
+          {/* <Route path="/mosque/:mosqueId/member/register/success" element={<SuccessPage />} /> */}
         </Routes>
     </div>
   );

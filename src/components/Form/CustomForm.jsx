@@ -13,12 +13,11 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import CustomErrorMessage from "../CustomErrorMessage";
 import { IoIosInformationCircleOutline } from "react-icons/io";
-import { useParams } from "react-router-dom";
+import { useNavigation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import validatePhoneNumber from "../../helpers/validatePhoneNumber";
 
 
-// Define your validation schema
 const validationSchema = Yup.object({
   name: Yup.string().required('Name is required'),
   email: Yup.string()
@@ -45,8 +44,9 @@ function CustomForm({language}) {
   const [phoneError, setPhoneError] = useState(null);
   const [countryCode, setCountryCode] = useState({ value: '+31', label: '+31 (Netherlands)', code:'NL' });
   const [page, setPage] = useState(0);
+  const [userId, setUserId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const {t} = useTranslation();
-
   console.log(countryCode, phone);
 
   useEffect(() => {
@@ -102,13 +102,16 @@ function CustomForm({language}) {
         countryCode: countryCode.value,
         language,
         isDigitalFormOnboarded:true,
+        isMobileOnBoarded: false
       };
       console.log(userInput);
+      setIsLoading(true);
       const signUpRes = await axios.post(
         `${baseUrl}/v1/create-account`,
         userInput
       );
       console.log("signup res -->", signUpRes);
+      setUserId(signUpRes?.data._id);
       const token = signUpRes.data?.token;
       const obj = {
         subscriptionId: selectedPlan?._id,
@@ -124,27 +127,36 @@ function CustomForm({language}) {
         },
       };
       await axios.post(`${baseUrl}/v1/add-user-subscription`, obj, config);
+      const paymentId = uuidv4();
       const paymentPayload = {
         userId: signUpRes?.data._id,
         paymentMode: "automatic",
         amount: 0.01,
         subscriptionId: uuidv4(),
-        paymentId: uuidv4(),
+        paymentId,
         entityId: mosqueId,
         paymentMethod: "ideal",
       };
 
       const res = await axios.post(
-        `${baseUrl}/v1/create-transaction`,
+        `${baseUrl}/v1/create-transaction?origin=web`,
         paymentPayload,
         config
       );
       console.log("payment-->", res.data);
       await captureForm();
-      setPage(1)
+      setIsLoading(false);
+      const redirectUrl = res.data?.requiredAction?.redirectURL;
+      console.log(redirectUrl)
+      window.open(redirectUrl,'_blank')
+      setTimeout(() => {
+        setPage(1)
+      }, 1000);
+      // setPage(1)
     } catch (error) {
       console.log(error);
       alert(error.response.data.error);
+      setIsLoading(false);
     }
 
     console.log(values, phone, selectedPlan.plan_name);
@@ -257,8 +269,8 @@ function CustomForm({language}) {
                   <button
                     type="submit"
                     className="submit-btn"
-                    disabled={!selectedPlan}
-                    style={{ background: selectedPlan ? "#D0004B" : "#a0aec0" }}
+                    disabled={!selectedPlan || isLoading}
+                    style={{ background: (selectedPlan && !isLoading) ? "#D0004B" : "#a0aec0" }}
                   >
                     {t('Proceed to Auto Debit')}
                   </button>
@@ -268,7 +280,7 @@ function CustomForm({language}) {
           </Formik>
         </main>
       ) : (
-        <SuccessPage />
+        <SuccessPage userId={userId} />
       )}
     </div>
   );

@@ -4,14 +4,14 @@ import doneImg from './assets/images/done_dig.svg'
 import { useTranslation } from 'react-i18next'
 import printDocument from './helpers/printDocument';
 
-function SuccessPage() {
+function SuccessPage({userId}) {
   const {t} = useTranslation();
   const [loading, setLoading] = useState(false);
 
   const handlePrintDocument = async () =>{
      try {
       setLoading(true);
-      await printDocument(setLoading);
+      await printDocument(setLoading, userId);
      } catch (error) {
       console.log(error);
       setLoading(false)

@@ -2,7 +2,7 @@
 import jsPDF from "jspdf";
 import { v4 as uuidv4 } from "uuid";
 
-const printDocument = async (setLoading) => {
+const printDocument = async (setLoading, userId) => {
   const imgData = localStorage.getItem('formImage');
 
   if (!imgData) {
@@ -35,7 +35,7 @@ const printDocument = async (setLoading) => {
         ? 'apidev.mosqapp.com'
         : 'api.mosqapp.com';
     
-    fetch(`http://localhost:8070/file/upload?location=digitalFormMedia`, {
+    fetch(`http://localhost:8070/file/upload?location=digitalFormMedia&userId=${userId}`, {
       method: 'POST',
       body: formData,
     })
