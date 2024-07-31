@@ -44,7 +44,7 @@ function CustomForm({language}) {
   const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState(null);
   const [countryCode, setCountryCode] = useState({ value: '+31', label: '+31 (Netherlands)', code:'NL' });
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const {t} = useTranslation();
 
   console.log(countryCode, phone);
