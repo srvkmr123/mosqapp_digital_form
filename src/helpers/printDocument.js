@@ -49,6 +49,7 @@ const printDocument = async (setLoading, userId) => {
       .then((data) => {
         console.log('PDF uploaded successfully:', data.data?.link);
         setLoading(false)
+        alert('PDF has been generated !!')
       })
       .catch((error) => {
         console.error('Error uploading PDF:', error);
